@@ -16,6 +16,10 @@ import { Feather } from "@expo/vector-icons";
 const IndexScreen = ({ navigation }) => {
     const { state, deleteBlogPost, getBlogPosts } = useContext(Context);
 
+    useEffect(() => {
+        getBlogPosts();
+    }, []);
+
     return (
         <View>
             <FlatList
