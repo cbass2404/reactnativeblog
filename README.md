@@ -32,15 +32,24 @@ Then type the following to open your environment and server:
 $ code . && npm start
 ```
 
-Inside of the src directory, create a folder called api, inside the folder create a file called yelp.js and populate it like so from your yelp.com/fusion account settings (business api):
+Setup your blog_json_server from the following place, instructions in README:
 
-```javascript
-import axios from "axios";
+https://github.com/cbass2404/blog_json_server
 
-export default axios.create({
-    baseURL: "https://api.yelp.com/v3/businesses",
-    headers: {
-        Authorization: "Bearer YELP_SECRET_KEY",
-    },
-});
+_Set it up in a seperate folder and environment_
+
+## Json-server Routes
+
+```
+Method          Route            Result
+___________________________________________________________________
+GET             /blogposts       Retrieve all stored blog posts
+
+GET             /blogposts/{id}  Get blog post with particular ID
+
+POST            /blogposts       Create a new blog post
+
+PUT             /blogposts/{id}  Update blog post with given ID
+
+DELETE          /blogposts/{id}  Delete blog post with given ID
 ```
