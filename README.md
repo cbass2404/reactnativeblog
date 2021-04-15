@@ -4,45 +4,60 @@
 
 A react native based app using expo to query the api using CRUD and manage a blog. The focus is on data management and not style.
 
-### Setting up the environment
+## Setting up the environment
 
 ---
 
-First navigate to the folder you want the project in and run the command:
+1. Navigate to the folder you want the project in and run the command:
 
 ```
 $ git clone https://github.com/cbass2404/reactnativeblog
 ```
 
-Next navigate into the folder by typing:
+2. Navigate into the folder by typing:
 
 ```
 $ cd reactnativeblog
 ```
 
-Now, run the following command to install dependencies for the project:
+3. Run the following command to install dependencies for the project:
 
 ```
 $ npm install
 ```
 
-Then type the following to open your environment and server:
+4. Type the following to open your environment and server:
 
 ```
 $ code . && npm start
 ```
 
-Setup your blog_json_server from the following place, instructions in README:
+5. Setup your blog_json_server from the following place, instructions in README:
 
 https://github.com/cbass2404/blog_json_server
 
 _Set it up in a seperate folder and environment_
 
-## Json-server Routes
+6. Create a folder in your main directory named api, inside the folder create a file named jsonServer.js and paste in the following:
+
+```javascript
+import axios from "axios";
+
+export default axios.create({
+    baseURL: "ngrok address",
+});
+```
+
+_Replace ngrok address with the forwarding tunnel address created by ngrok in the server_
+
+## JSON-Server Routes
+
+---
 
 ```
 Method          Route            Result
-___________________________________________________________________
+_________________________________________
+
 GET             /blogposts       Retrieve all stored blog posts
 
 GET             /blogposts/{id}  Get blog post with particular ID
