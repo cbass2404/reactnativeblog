@@ -26,7 +26,7 @@ const getBlogPosts = (dispatch) => {
             dispatch({ type: "get_blogposts", payload: response.data });
         } catch (e) {
             console.error("getBlogPosts: ", e);
-            throw "Something went wrong";
+            throw "Something went wrong, try again later.";
         }
     };
 };
@@ -39,16 +39,22 @@ const deleteBlogPost = (dispatch) => {
             dispatch({ type: "delete_blogpost", payload: id });
         } catch (e) {
             console.error("deleteBlogPost: ", e);
-            throw "Something went wrong";
+            throw "Something went wrong, try again later.";
         }
     };
 };
 
 const editBlogPost = (dispatch) => {
-    return (id, title, content, callback) => {
-        dispatch({ type: "edit_blogpost", payload: { id, title, content } });
-        if (callback) {
-            callback();
+    return async (id, title, content, callback) => {
+        try {
+            await jsonServer.put(`/blogposts/${id}`, { title, content });
+
+            if (callback) {
+                callback();
+            }
+        } catch (e) {
+            console.error("editBlogPost: ", e);
+            throw "Something went wrong, try again later.";
         }
     };
 };
