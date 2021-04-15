@@ -5,15 +5,6 @@ const blogReducer = (state, action) => {
     switch (action.type) {
         case "get_blogposts":
             return action.payload;
-        case "add_blogpost":
-            return [
-                ...state,
-                {
-                    id: Math.floor(Math.random() * 99999999),
-                    title: action.payload.title,
-                    content: action.payload.content,
-                },
-            ];
         case "delete_blogpost":
             return state.filter((blogPost) => blogPost.id !== action.payload);
         case "edit_blogpost":
@@ -33,24 +24,23 @@ const getBlogPosts = (dispatch) => {
             const response = await jsonServer.get("/blogposts");
 
             dispatch({ type: "get_blogposts", payload: response.data });
-        } catch {
-            pass;
-        }
-    };
-};
-
-const addBlogPost = (dispatch) => {
-    return (title, content, callback) => {
-        dispatch({ type: "add_blogpost", payload: { title, content } });
-        if (callback) {
-            callback();
+        } catch (e) {
+            console.error("getBlogPosts: ", e);
+            throw "Something went wrong";
         }
     };
 };
 
 const deleteBlogPost = (dispatch) => {
-    return (id) => {
-        dispatch({ type: "delete_blogpost", payload: id });
+    return async (id) => {
+        try {
+            await jsonServer.delete(`/blogposts/${id}`);
+
+            dispatch({ type: "delete_blogpost", payload: id });
+        } catch (e) {
+            console.error("deleteBlogPost: ", e);
+            throw "Something went wrong";
+        }
     };
 };
 
@@ -65,6 +55,6 @@ const editBlogPost = (dispatch) => {
 
 export const { Context, Provider } = createDataContext(
     blogReducer,
-    { getBlogPosts, addBlogPost, deleteBlogPost, editBlogPost },
+    { getBlogPosts, deleteBlogPost, editBlogPost },
     []
 );
